@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=Literata:ital,opsz,wght@0,7..72,400;1,7..72,400&display=swap">
+<link rel="stylesheet" href="style.css"><title>Rasa Nusantara | Tentang dan Layanan</title></head><body>
+<nav class="nav" aria-label="Utama"><a class="brand" href="index.html"><i></i><b>Rasa Nusantara</b></a><div class="nav-links"><span class="ind"></span><a href="index.html">Menu</a><a href="about.html" class="on">Tentang</a><a href="projects.html">Ulasan</a></div></nav>
+<header class="hero"><h1><span class="ln"><span style="--i:0">Dapur kecil yang</span></span><span class="ln"><span style="--i:1">berdiri sejak 2018.</span></span></h1>
+<p>Kami melestarikan cita rasa masakan otentik Indonesia, untuk makan di tempat, dibawa pulang, atau acara besar.</p></header>
+<main class="wrap"><div class="tl rv">
+<div style="--i:0"><b>2018</b><p>Rasa Nusantara berdiri untuk melestarikan cita rasa masakan otentik Indonesia.</p></div>
+<div style="--i:1"><b>Seiring waktu</b><p>Melayani pelanggan di dalam negeri maupun luar negeri.</p></div>
+<div style="--i:2"><b>Hari ini</b><p>10 menu dari rendang sampai es cendol, untuk makan di tempat, dibawa pulang, dan acara besar.</p></div>
+</div>
+<div class="cols">
+<section class="panel rv"><h2>Jam operasional</h2><div class="live" id="st"><span>Memeriksa jam buka</span></div>
+<div class="hrs"><div data-d="1,2,3,4,5"><span>Senin sampai Jumat</span><span>10.00 – 21.00</span></div><div data-d="0,6"><span>Sabtu dan Minggu</span><span>09.00 – 22.00</span></div></div></section>
+<section class="panel rv"><h2>Layanan</h2><p>Pilih layanan untuk melihat detailnya.</p>
+<div class="svcs"><button class="svc" aria-pressed="true">Makan di tempat</button><button class="svc" aria-pressed="false">Bungkus dan delivery</button><button class="svc" aria-pressed="false">Nasi kotak kantor</button><button class="svc" aria-pressed="false">Katering prasmanan</button></div>
+<p id="svc-d">Makan di tempat selagi masakan masih hangat.</p></section>
+</div></main>
+<script src="main.js"></script>
+<script>
+const $=s=>document.querySelector(s),d=new Date(),H={0:[9,22],6:[9,22]},[a,b]=H[d.getDay()]||[10,21],h=d.getHours()+d.getMinutes()/60,on=h>=a&&h<b,na=(H[(d.getDay()+1)%7]||[10])[0];
+$('#st').className='live '+(on?'on':'off');
+$('#st span').textContent=on?`Buka sekarang, tutup pukul ${b}.00`:h<a?`Tutup, buka pukul ${a}.00 hari ini`:`Tutup, buka besok pukul ${na}.00`;
+document.querySelectorAll('.hrs div').forEach(r=>r.classList.toggle('today',r.dataset.d.split(',').includes(String(d.getDay()))));
+const T=['Makan di tempat selagi masakan masih hangat.','Dibungkus rapi untuk dibawa pulang atau diantar.','Nasi kotak untuk rapat, pelatihan, dan acara kantor.','Prasmanan untuk acara besar. Hubungi kami untuk menu dan jumlah tamu.'];
+const S=[...document.querySelectorAll('.svc')];S.forEach((s,i)=>s.onclick=()=>{S.forEach(x=>x.setAttribute('aria-pressed',x===s));$('#svc-d').textContent=T[i]});
+</script></body></html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=Literata:ital,opsz,wght@0,7..72,400;1,7..72,400&display=swap">
+<link rel="stylesheet" href="style.css"><title>Rasa Nusantara | Katalog Menu</title></head><body>
+<nav class="nav" aria-label="Utama"><a class="brand" href="index.html"><i></i><b>Rasa Nusantara</b></a><div class="nav-links"><span class="ind"></span><a href="index.html" class="on">Menu</a><a href="about.html">Tentang</a><a href="projects.html">Ulasan</a></div></nav>
+<section class="landing"><div class="lt"><div class="float"><h1><span class="ln"><span style="--i:0">Indonesian</span></span><span class="ln"><span style="--i:1">Food</span></span></h1></div><p>Rasa Nusantara</p></div><div class="cue">Gulir untuk melihat menu</div></section>
+<header class="hero"><h1><span class="ln"><span style="--i:0">Rendang, nasi goreng,</span></span><span class="ln"><span style="--i:1">dan sate. Dimasak hari ini.</span></span></h1>
+<p>Pilih menu, atur jumlah porsi, lalu pesan lewat WhatsApp. Resepnya juga boleh dibawa pulang.</p><button class="rand" id="rand">Bingung pilih? Acak menu</button></header>
+<main class="wrap"><div class="menu-grid" id="grid"></div></main>
+<div class="scrim" id="scrim"></div>
+<aside class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="d-title" inert>
+<button class="x" id="x">Tutup</button><h2 id="d-title"></h2><p id="d-desc"></p>
+<div class="qty"><span>Jumlah porsi</span><div><button id="mn" aria-label="Kurangi porsi">−</button><output id="q">1</output><button id="pl" aria-label="Tambah porsi">+</button></div></div>
+<div class="total"><span>Total</span><strong id="tot">Rp 0</strong></div>
+<a class="order" id="wa" target="_blank" rel="noopener">Pesan lewat WhatsApp</a>
+<h3>Bahan</h3><ul class="chk" id="ing"></ul>
+<h3>Cara memasak <small id="pg"></small></h3><div class="bar"><i id="bar"></i></div><ul class="chk" id="stp"></ul>
+</aside>
+<script src="menu.js"></script>
+<script>
+const WA='6281234567890'; // ganti dengan nomor WhatsApp usaha (awalan 62, tanpa +)
+const grid=document.getElementById('grid');
+grid.innerHTML=Object.entries(D).map(([k,m])=>`<article class="card ${m.c} rv" tabindex="0" role="button" data-k="${k}" style="--g:${m.g}"><img src="${m.img}" alt="${m.title}" onerror="this.remove()"><div class="info"><h3>${m.title}</h3><p>${m.short}</p><div class="meta"><span class="price">Rp ${m.price.toLocaleString('id-ID')} / porsi</span><span class="go">Lihat resep</span></div></div></article>`).join('');
+const $=s=>document.querySelector(s),rp=n=>'Rp '+n.toLocaleString('id-ID'),sheet=$('#sheet');
+let k,q=1,shown=0,last;
+function tot(){const t=D[k].price*q,a=shown,s=performance.now();$('#q').textContent=q;
+ (function f(n){const p=Math.min((n-s)/350,1);shown=Math.round(a+(t-a)*p);$('#tot').textContent=rp(shown);if(p<1)requestAnimationFrame(f)})(s);
+ $('#wa').href='https://wa.me/'+WA+'?text='+encodeURIComponent(`Halo, saya mau pesan ${q} porsi ${D[k].title}. Total ${rp(t)}.`)}
+function prog(){const c=[...document.querySelectorAll('#stp input')],n=c.filter(i=>i.checked).length;$('#bar').style.width=n/c.length*100+'%';$('#pg').textContent=`(${n} dari ${c.length} selesai)`}
+const li=a=>a.map(t=>`<li><label><input type="checkbox"><span>${t}</span></label></li>`).join('');
+function open(key){k=key;q=1;shown=0;last=document.activeElement;const m=D[k];
+ $('#d-title').textContent=m.title;$('#d-desc').textContent=m.desc;$('#ing').innerHTML=li(m.ing);$('#stp').innerHTML=li(m.stp);
+ prog();tot();sheet.removeAttribute('inert');document.body.classList.add('open');sheet.scrollTop=0;$('#x').focus()}
+function close(){document.body.classList.remove('open');sheet.setAttribute('inert','');last&&last.focus()}
+document.querySelectorAll('.card').forEach(c=>{c.onclick=()=>open(c.dataset.k);c.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();open(c.dataset.k)}}});
+$('#stp').onchange=prog;$('#x').onclick=close;$('#scrim').onclick=close;
+$('#mn').onclick=()=>{if(q>1){q--;tot()}};$('#pl').onclick=()=>{if(q<99){q++;tot()}};
+document.getElementById('rand').onclick=()=>{const c=[...document.querySelectorAll('.card')],e=c[Math.floor(Math.random()*c.length)];e.scrollIntoView({behavior:'smooth',block:'center'});e.animate([{boxShadow:'0 0 0 0 rgba(242,162,44,.9)'},{boxShadow:'0 0 0 24px rgba(242,162,44,0)'}],{duration:900,iterations:2});setTimeout(()=>open(e.dataset.k),1300)};
+addEventListener('keydown',e=>{if(e.key==='Escape'&&document.body.classList.contains('open'))close()});
+</script>
+<script src="main.js"></script></body></html>

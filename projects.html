@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=Literata:ital,opsz,wght@0,7..72,400;1,7..72,400&display=swap">
+<link rel="stylesheet" href="style.css"><title>Rasa Nusantara | Ulasan Pelanggan</title></head><body>
+<nav class="nav" aria-label="Utama"><a class="brand" href="index.html"><i></i><b>Rasa Nusantara</b></a><div class="nav-links"><span class="ind"></span><a href="index.html">Menu</a><a href="about.html">Tentang</a><a href="projects.html" class="on">Ulasan</a></div></nav>
+<header class="hero"><h1><span class="ln"><span style="--i:0">Kata mereka yang</span></span><span class="ln"><span style="--i:1">sudah mencoba.</span></span></h1>
+<p>Satu ulasan untuk setiap menu Rasa Nusantara.</p></header>
+<main class="wrap"><div class="list" id="list"></div></main>
+<script src="menu.js"></script>
+<script>
+/* Ulasan per menu: [nama, isi]. Kuncinya sama dengan di menu.js.
+   Ulasan soto sampai cendol adalah CONTOH, ganti dengan ulasan asli pelanggan. */
+const R={
+rendang:['Budi Santoso, Jakarta','Rendangnya juara! Dagingnya empuk luar biasa, bumbunya meresap sampai ke serat. Sangat direkomendasikan untuk katering kantor.'],
+nasigoreng:['Ahmad Dhani, Surabaya','Nasi goreng kampungnya mantap, bumbu tradisionalnya terasa. Porsinya mengenyangkan dan dikemas rapi saat dipesan online.'],
+sate:['Citra Lestari, Bandung','Sate ayam Maduranya wangi asap, dagingnya tebal, bumbu kacangnya halus dan gurih. Anak-anak di rumah suka sekali.'],
+soto:['Rina Maharani, Yogyakarta','Kuahnya gurih dan wangi kunyit, ayamnya banyak. Cocok untuk makan siang kantor.'],
+gado:['Dewi Anggraini, Semarang','Sayurnya segar dan saus kacangnya pas, tidak terlalu manis.'],
+bakso:['Hendra Wijaya, Malang','Baksonya kenyal dan kuahnya gurih. Anak saya sampai nambah dua kali.'],
+penyet:['Fajar Nugroho, Medan','Ayamnya garing di luar, empuk di dalam. Sambal bawangnya pedas yang pas.'],
+pempek:['Siti Aminah, Palembang','Cuko-nya mantap dan pempeknya kenyal. Pesan lagi kalau ada acara keluarga.'],
+gudeg:['Lestari Putri, Solo','Manisnya pas dan nangkanya empuk. Dipesan untuk arisan, semua tamu suka.'],
+cendol:['Agus Pratama, Bekasi','Segar sekali, santannya gurih dan gula merahnya wangi. Pas untuk penutup.']};
+document.getElementById('list').innerHTML=Object.entries(D).map(([k,m],i)=>{
+ const [n,t]=R[k]||['Pelanggan','Belum ada ulasan untuk menu ini.'];
+ return `<article class="rev ${i%2?'r':'l'} rv"><div class="pic" style="--g:${m.g}"><img src="${m.img}" alt="${m.title}" onerror="this.remove()"><h3>${m.title}</h3></div><figure class="panel"><div class="stars" aria-label="5 dari 5 bintang">★★★★★</div><p>“${t}”</p><figcaption>${n}</figcaption></figure></article>`}).join('');
+</script>
+<script src="main.js"></script></body></html>
